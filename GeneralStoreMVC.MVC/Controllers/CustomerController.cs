@@ -1,65 +1,46 @@
-using GeneralStoreMVC.Data;
-using GeneralStoreMVC.Data.Entities;
 using GeneralStoreMVC.Models.Customer;
+using GeneralStoreMVC.Services.Customer;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace GeneralStoreMVC.MVC.Controllers;
 
 public class CustomerController : Controller
 {
-    private readonly GeneralStoreDbContext _ctx;
-    public CustomerController(GeneralStoreDbContext dbContext)
+    private readonly ICustomerService _service;
+    public CustomerController(ICustomerService service)
     {
-        _ctx = dbContext;
+        _service = service;
     }
 
-    public async Task<IActionResult> Index()
-    {
-        List<CustomerIndexViewModel> customers = await _ctx.Customers
-            .Select(customer => new CustomerIndexViewModel
-            {
-                Id = customer.Id,
-                Name = customer.Name,
-                Email = customer.Email
-            })
-            .ToListAsync();
-        return View(customers);
-    }
-
+[HttpGet]
     public IActionResult Create()
     {
         return View();
     }
 
     [HttpPost]
-    [ValidateAntiForgeryToken]
     public async Task<IActionResult> Create(CustomerCreateViewModel model)
     {
-        if (!ModelState.IsValid)
-        {
-            TempData["ErrorMsg"] = "Model State is invalid.";
+        if(!ModelState.IsValid)
             return View(model);
-        }
 
-        CustomerEntity entity = new()
-            {
-                Name = model.Name,
-                Email = model.Email
-            };
-            _ctx.Customers.Add(entity);
+        await _service.CreateCustomerAsync(model);
 
-            if (await _ctx.SaveChangesAsync() !=1)
-            {
-                TempData["ErrorMsg"] = "Unable to save to the database. Please try again later.";
-                return View(model);
-            }
-
-            return RedirectToAction(nameof(Index));
+        return RedirectToAction(nameof(Index));
     }
+
+    [HttpGet]
+    public async Task<IActionResult> Index()
+    {
+        List<CustomerIndexViewModel> customers = (List<CustomerIndexViewModel>)await _service.GetCustomersAsync();
+        return View(customers);
+    }
+    
 
     
 }
+
+
 
 
 
