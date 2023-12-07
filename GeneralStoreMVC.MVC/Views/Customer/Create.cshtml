@@ -1,0 +1,30 @@
+@model GeneralStoreMVC.Models.Customer.CustomerCreateViewModel
+@{
+    ViewData["Title"] = "Create Customer";
+}
+
+@if (TempData["ErrorMsg"] != null)
+{
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        <strong>ERROR:</strong> @TempData["ErrorMsg"]
+        <button type="button" class="btn-close" data-bs-dimiss="alert" aria-label="Close"></button>
+    </div>
+}
+
+<div asp-validation-summary="ModelOnly" class="text-danger"></div>
+<form asp-action="Create" method="post" class="row g-3">
+    <div class="col-md-6">
+        <label asp-for="Name" class="form-label"></label>
+        <input asp-for="Name" class="form-control">
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="col-md-6">
+        <label asp-for="Email" class="form-label"></label>
+        <input asp-for="Email" class="form-control">
+        <span asp-validation-for="Email" class="text-danger"></span>
+    </div>
+    <div class="col d-flex justify-content-between align-items-baseline">
+        <a asp-action="Index">Back to List</a>
+        <input type="submit" value="Create" class="btn btn-primary">
+    </div>
+</form>
