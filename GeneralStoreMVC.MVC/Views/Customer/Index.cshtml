@@ -1,0 +1,30 @@
+@model List<GeneralStoreMVC.Models.Customer.CustomerIndexViewModel>
+@{
+    ViewData["Title"] = "Customer Index";
+}
+
+<div class="d-flex flex-wrap justify-content-between align-item-baseline">
+    <h1>All Customers</h1>
+    <a asp-controller="Customer" asp-action="Create" class="btn btn-sm btn-success">Create a Customer</a>
+</div>
+
+<table class="table table-striped border">
+    <thead>
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th> </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var customer in Model)
+        {
+            <tr>
+                <td>@customer.Id</td>
+                <td>@customer.Name</td>
+                <td>@customer.Email</td>
+                <td> </td>
+            </tr>
+        }
+    </tbody>
+</table>
