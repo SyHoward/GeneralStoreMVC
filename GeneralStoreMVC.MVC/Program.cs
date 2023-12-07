@@ -1,4 +1,5 @@
 using GeneralStoreMVC.Data;
+using GeneralStoreMVC.Services.Customer;
 using Microsoft.EntityFrameworkCore;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -11,6 +12,8 @@ builder.Services.AddDbContext<GeneralStoreDbContext>(
         builder.Configuration.GetConnectionString("GeneralStoreDb")
     )
 );
+
+builder.Services.AddScoped<ICustomerService, CustomerService>();
 
 var app = builder.Build();
 
