@@ -6,5 +6,5 @@ namespace GeneralStoreMVC.Services.Customer;
 {
     Task<IEnumerable<CustomerIndexViewModel>> GetCustomersAsync();
     Task<bool> CreateCustomerAsync(CustomerCreateViewModel model);
-    
+    Task<CustomerDetailViewModel?> GetCustomerDetailAsync(int id);
 }

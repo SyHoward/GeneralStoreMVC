@@ -37,5 +37,19 @@ public class CustomerService : ICustomerService
 
         return customers;
     }
+
+    public async Task<CustomerDetailViewModel?> GetCustomerDetailAsync(int id)
+    {
+        CustomerEntity? customer = await _cxt.Customers
+            .FirstOrDefaultAsync(c => c.Id == id);
+
+        return customer is null ? null : new()
+        {
+            Id = customer.Id,
+            Name = customer.Name,
+            Email = customer.Email
+        };
+    }
 }
+
 
