@@ -23,7 +23,9 @@
                 <td>@customer.Id</td>
                 <td>@customer.Name</td>
                 <td>@customer.Email</td>
-                <td> </td>
+                <td class="text-end">
+                    <a asp-action="Details" asp-route-id="@customer.Id" class="btn btn-sm btn-primary">Details</a>
+                </td>
             </tr>
         }
     </tbody>

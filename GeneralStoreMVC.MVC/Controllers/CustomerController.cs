@@ -32,12 +32,19 @@ public class CustomerController : Controller
     [HttpGet]
     public async Task<IActionResult> Index()
     {
-        List<CustomerIndexViewModel> customers = (List<CustomerIndexViewModel>)await _service.GetCustomersAsync();
+        IEnumerable<CustomerIndexViewModel> customers = await _service.GetCustomersAsync();
         return View(customers);
     }
     
+    public async Task<IActionResult> Details(int id)
+    {
+        CustomerDetailViewModel? model = await _service.GetCustomerDetailAsync(id);
 
+        if (model is null)
+            return RedirectToAction(nameof(Index));
     
+        return View(model);
+    }
 }
 
 
