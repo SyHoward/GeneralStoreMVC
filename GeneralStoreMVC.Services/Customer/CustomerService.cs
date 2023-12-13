@@ -50,6 +50,44 @@ public class CustomerService : ICustomerService
             Email = customer.Email
         };
     }
+
+    public async Task<bool> EditCustomerAsync(CustomerEditViewModel model)
+    {
+        CustomerEntity? entity = await _cxt.Customers.FindAsync(model.Id);
+
+        if (entity is null)
+            return false;
+
+        entity.Name = model.Name;
+        entity.Email = model.Email;
+        return await _cxt.SaveChangesAsync() == 1;
+    }
+
+    public async Task<bool> DeleteCustomerAsync(int id)
+    {
+        var entity = await _cxt.Customers
+            .Include(c => c.Transactions)
+            .FirstOrDefaultAsync(c => c.Id == id);
+
+        if (entity is null)
+            return false;
+
+        if (entity.Transactions.Count > 0)
+        {
+            _cxt.Transactions.RemoveRange(entity.Transactions);
+        }
+
+        _cxt.Customers.Remove(entity);
+
+        if (_cxt.SaveChanges() != 1 + entity.Transactions.Count)
+        {
+            return false;
+        }
+
+        return true;
+        
+    }
+
 }
 
 
