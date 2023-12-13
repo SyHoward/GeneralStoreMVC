@@ -3,6 +3,7 @@
   <ItemGroup>
     <ProjectReference Include="..\GeneralStoreMVC.Models\GeneralStoreMVC.Models.csproj" />
     <ProjectReference Include="..\GeneralStoreMVC.Services\GeneralStoreMVC.Services.csproj" />
+    <ProjectReference Include="..\GeneralStoreMVC.Data\GeneralStoreMVC.Data.csproj" />
   </ItemGroup>
 
   <ItemGroup>

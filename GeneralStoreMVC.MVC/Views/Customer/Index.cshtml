@@ -25,6 +25,8 @@
                 <td>@customer.Email</td>
                 <td class="text-end">
                     <a asp-action="Details" asp-route-id="@customer.Id" class="btn btn-sm btn-primary">Details</a>
+                    <a asp-action="Edit" asp-route-id="@customer.Id" class="btn btn-sm btn-primary">Edit</a>
+                    <a asp-action="Delete" asp-route-id="@customer.Id" class="btn btn-sm btn-primary">Delete</a>
                 </td>
             </tr>
         }
