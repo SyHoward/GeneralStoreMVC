@@ -2,7 +2,6 @@ using GeneralStoreMVC.Models.Customer;
 using GeneralStoreMVC.Services.Customer;
 using GeneralStoreMVC.Data.Entities;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.Identity.Client;
 
 namespace GeneralStoreMVC.MVC.Controllers;
 
@@ -14,7 +13,7 @@ public class CustomerController : Controller
         _service = service;
     }
 
-[HttpGet]
+    [HttpGet]
     public IActionResult Create()
     {
         return View();
@@ -38,6 +37,7 @@ public class CustomerController : Controller
         return View(customers);
     }
     
+    [HttpGet]
     public async Task<IActionResult> Details(int id)
     {
         CustomerDetailViewModel? model = await _service.GetCustomerDetailAsync(id);
